@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RWANDAN KING Puzzle</title>
+    <title>History of Hutu – Tutsi Relations Puzzle</title>
 
     <style>
       body {
@@ -71,6 +71,10 @@
         border-radius: 25px;
         font-size: 16px;
         transition: transform 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
       }
 
       .completion-overlay {
@@ -145,7 +149,8 @@
         font-weight: bold;
       }
 
-      .fun-fact, .historical-info {
+      .fun-fact,
+      .historical-info {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         padding: 15px;
@@ -154,13 +159,15 @@
         backdrop-filter: blur(10px);
       }
 
-      .fun-fact h3, .historical-info h3 {
+      .fun-fact h3,
+      .historical-info h3 {
         margin-top: 0;
         color: #f5576c;
         font-size: 1.2em;
       }
 
-      .fun-fact p, .historical-info p {
+      .fun-fact p,
+      .historical-info p {
         color: #fff;
         margin-bottom: 0;
         line-height: 1.6;
@@ -169,13 +176,33 @@
   </head>
 
   <body>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 500px; margin: 0 auto 20px;">
-      <button onclick="goBack()" style="padding: 8px 15px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid white; border-radius: 20px; cursor: pointer;">← Back to Levels</button>
-      <div style="font-size: 1.2em; font-weight: bold;">Level 1</div>
-      <div id="timer" style="font-size: 1.2em; font-weight: bold;">00:00</div>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 500px;
+        margin: 0 auto 20px;
+      "
+    >
+      <button
+        onclick="goBack()"
+        style="
+          padding: 8px 15px;
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+          border: 1px solid white;
+          border-radius: 20px;
+          cursor: pointer;
+        "
+      >
+        ← Back to Levels
+      </button>
+      <div style="font-size: 1.2em; font-weight: bold">Level 2</div>
+      <div id="timer" style="font-size: 1.2em; font-weight: bold">00:00</div>
     </div>
 
-    <h1>RWANDAN KING</h1>
+    <h1>History of Hutu – Tutsi Relations</h1>
     <hr />
 
     <div id="board"></div>
@@ -189,7 +216,7 @@
         <div class="completion-stats">
           <div class="stat-item">
             <span class="stat-label">Level:</span>
-            <span class="stat-value" id="completion-level">1</span>
+            <span class="stat-value" id="completion-level">2</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Time:</span>
@@ -208,9 +235,12 @@
           <h3>📚 Historical Figure</h3>
           <p id="completion-historical-info">Loading...</p>
         </div>
-        <p style="color: #fff; margin-top: 20px; font-style: italic;">
-          🔗 Continue learning: Search for 'King Kigeli IV Rwabugiri' to discover more about Rwanda's royal history!<br>
-          <strong style="color: #f093fb;">⏭️ Auto-advancing to Level 2 in a few seconds...</strong>
+        <p style="color: #fff; margin-top: 20px; font-style: italic">
+          🔗 Continue learning: Search for 'Paul Kagame' to learn about Rwanda's
+          modern transformation!<br />
+          <strong style="color: #f093fb"
+            >⏭️ Auto-advancing to Level 3 in a few seconds...</strong
+          >
         </p>
       </div>
     </div>
@@ -295,18 +325,18 @@
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
-        document.getElementById('timer').textContent =
-          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        document.getElementById("timer").textContent =
+          `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
       }
 
-      const currentLevel = 1;
+      const currentLevel = 2;
 
       function goBack() {
         window.location.href = 'GAME_INDEX.HTML';
       }
 
       function goToNextLevel() {
-        window.location.href = 'PUZZLE2.HTML';
+        window.location.href = 'PUZZLE3.HTML';
       }
 
       // START GAME
@@ -373,7 +403,16 @@
         const possibleMoves = [
           emptyIndex - 1,
           emptyIndex + 1,
-          emptyIndex - 3,
+
+          // Update completion modal
+          document.getElementById('completion-level').textContent = '2';
+          document.getElementById('completion-time').textContent = document.getElementById("timer").textContent;
+          document.getElementById('completion-score').textContent = score;
+          document.getElementById('completion-fun-fact').textContent = funFact;
+          document.getElementById('completion-historical-info').textContent = historicalInfo;
+
+          // Show completion overlay
+          document.getElementById('completion-overlay').style.display = 'flex'
           emptyIndex + 3,
         ];
 
@@ -382,7 +421,7 @@
           emptyIndex = index;
           draw();
           checkWin();
-        }
+        }8
       }
 
       // CHECK WIN
@@ -397,33 +436,27 @@
         stopTimer();
         const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
 
-        // Calculate score based on time (max 1000 points, decreases with time)
-        const baseScore = 1000;
-        const timePenalty = Math.floor(elapsedTime / 10) * 50; // Lose 50 points per 10 seconds
-        const score = Math.max(100, baseScore - timePenalty); // Minimum 100 points
-
         setTimeout(() => {
-          const funFact = "Rwanda's Kingdom of Rwanda was one of the oldest and most centralized kingdoms in Africa, dating back to the 15th century!";
-          const historicalInfo = "🌟 Learn about King Kigeli IV Rwabugiri, the powerful king who unified Rwanda in the 19th century and expanded its territory significantly.";
+          // Calculate score based on time (max 1000 points, decreases with time)
+          const baseScore = 1000;
+          const timePenalty = Math.floor(elapsedTime / 10) * 50; // Lose 50 points per 10 seconds
+          const score = Math.max(100, baseScore - timePenalty); // Minimum 100 points
 
-          // Update completion modal
-          document.getElementById('completion-level').textContent = '1';
-          document.getElementById('completion-time').textContent = document.getElementById('timer').textContent;
-          document.getElementById('completion-score').textContent = score;
-          document.getElementById('completion-fun-fact').textContent = funFact;
-          document.getElementById('completion-historical-info').textContent = historicalInfo;
-
-          // Show completion overlay
-          document.getElementById('completion-overlay').style.display = 'flex';
+          const funFact = "The Hutu and Tutsi people of Rwanda share a common language (Kinyarwanda) and culture, despite historical divisions.";
+          const historicalInfo = "🌟 Explore the legacy of President Paul Kagame, who led Rwanda's recovery after the 1994 genocide and transformed it into a model of development in Africa.";
+          alert(`🎉 Congratulations! You completed Level 2 in ${document.getElementById("timer").textContent}!\n\n⭐ Score: ${score} points\n\n💡 Fun Fact: ${funFact}\n\n📚 Historical Figure: ${historicalInfo}\n\n🔗 Continue learning: Search for 'Paul Kagame' to learn about Rwanda's modern transformation!`);
 
           // Send completion message to parent window (main game page)
           if (window.parent !== window) {
-            window.parent.postMessage({
-              type: 'levelCompleted',
-              level: 1,
-              time: elapsedTime,
-              score: score
-            }, '*');
+            window.parent.postMessage(
+              {
+                type: "levelCompleted",
+                level: 2,
+                time: elapsedTime,
+                score: score,
+              },
+              "*",
+            );
           }
 
           // Auto-redirect to next level after a delay
