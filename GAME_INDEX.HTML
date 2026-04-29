@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rwandan History Puzzle Game</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        min-height: 100vh;
+        padding: 20px;
+        margin: 0;
+      }
+
+      h1 {
+        margin-top: 30px;
+        font-size: 3em;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+        margin-bottom: 40px;
+        opacity: 0.9;
+      }
+
+      .levels-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .level-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 25px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .level-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .level-card.locked {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .level-card.locked:hover {
+        transform: none;
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: none;
+      }
+
+      .level-number {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #f093fb;
+      }
+
+      .level-title {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+
+      .level-description {
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin-bottom: 20px;
+        opacity: 0.9;
+      }
+
+      .level-difficulty {
+        display: inline-block;
+        padding: 5px 15px;
+        background: rgba(240, 147, 251, 0.2);
+        border-radius: 20px;
+        font-size: 0.8em;
+        margin-bottom: 15px;
+      }
+
+      .play-button {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .play-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(240, 147, 251, 0.4);
+      }
+
+      .lock-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.5em;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 10px;
+        margin: 20px auto;
+        max-width: 300px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.3s ease;
+      }
+
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+      }
+
+      .stat {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        min-width: 100px;
+      }
+
+      .stat-number {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #f093fb;
+      }
+
+      .stat-label {
+        font-size: 0.8em;
+        opacity: 0.8;
+        margin-top: 5px;
+      }
+
+      @media (max-width: 768px) {
+        .levels-container {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+
+        .stats {
+          gap: 15px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Rwandan History Puzzle Game</h1>
+    <p class="subtitle">
+      Explore Rwanda's rich history through challenging puzzles
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number" id="completedLevels">0</div>
+        <div class="stat-label">Levels Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="totalLevels">7</div>
+        <div class="stat-label">Total Levels</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="bestTime">--:--</div>
+        <div class="stat-label">Best Time</div>
+      </div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+
+    <div class="levels-container">
+      <div class="level-card" onclick="playLevel(1)">
+        <div class="level-number">1</div>
+        <div class="level-title">Rwandan King</div>
+        <div class="level-description">
+          Start your journey with this introductory puzzle featuring Rwanda's
+          royal heritage.
+        </div>
+        <div class="level-difficulty">Easy</div>
+        <button class="play-button">Play Level 1</button>
+      </div>
+
+      <div class="level-card" onclick="playLevel(2)">
+        <div class="level-number">2</div>
+        <div class="level-title">Hutu-Tutsi Relations</div>
+        <div class="level-description">
+          Learn about the historical relationship between Rwanda's major ethnic
+          groups.
+        </div>
+        <div class="level-difficulty">Medium</div>
+        <button class="play-button">Play Level 2</button>
+      </div>
+
+      <div class="level-card" onclick="playLevel(3)">
+        <div class="level-number">3</div>
+        <div class="level-title">World History Facts</div>
+        <div class="level-description">
+          Connect Rwanda's history to the broader context of world historical
+          events.
+        </div>
+        <div class="level-difficulty">Hard</div>
+        <button class="play-button">Play Level 3</button>
+      </div>
+      <div class="level-card" onclick="playLevel(4)">
+        <div class="level-number">4</div>
+        <div class="level-title">Rwandan Coast</div>
+        <div class="level-description">
+          Explore Rwanda's lakeshore culture and discover how water shaped the
+          nation's story.
+        </div>
+        <div class="level-difficulty">Very Hard</div>
+        <button class="play-button">Play Level 4</button>
+      </div>
+      <div class="level-card" onclick="playLevel(5)">
+        <div class="level-number">5</div>
+        <div class="level-title">Royal Ceremony</div>
+        <div class="level-description">
+          A new level celebrating Rwanda's royal ceremonies and historic pageantry.
+        </div>
+        <div class="level-difficulty">Hard</div>
+        <button class="play-button">Play Level 5</button>
+      </div>
+      <div class="level-card" onclick="playLevel(6)">
+        <div class="level-number">6</div>
+        <div class="level-title">King's Legacy</div>
+        <div class="level-description">
+          Reveal the legacy of Rwanda's kings and unlock deeper cultural insight.
+        </div>
+        <div class="level-difficulty">Hard</div>
+        <button class="play-button">Play Level 6</button>
+      </div>
+      <div class="level-card" onclick="playLevel(7)">
+        <div class="level-number">7</div>
+        <div class="level-title">Cultural Crown</div>
+        <div class="level-description">
+          Celebrate Rwanda's royal heritage with this final master-level puzzle.
+        </div>
+        <div class="level-difficulty">Very Hard</div>
+        <button class="play-button">Play Level 7</button>
+      </div>
+    </div>
+
+    <script>
+      // Game state management
+      let gameState = {
+        completedLevels: [],
+        bestTimes: {},
+        currentLevel: null,
+      };
+
+      // Load game state from localStorage
+      function loadGameState() {
+        const saved = localStorage.getItem("rwandanPuzzleGame");
+        if (saved) {
+          gameState = JSON.parse(saved);
+          updateUI();
+        }
+      }
+
+      // Save game state to localStorage
+      function saveGameState() {
+        localStorage.setItem("rwandanPuzzleGame", JSON.stringify(gameState));
+      }
+
+      // Update UI based on game state
+      function updateUI() {
+        document.getElementById("completedLevels").textContent =
+          gameState.completedLevels.length;
+
+        const progress = (gameState.completedLevels.length / 7) * 100;
+        document.getElementById("progressFill").style.width = progress + "%";
+
+        // Update best time display
+        const times = Object.values(gameState.bestTimes);
+        if (times.length > 0) {
+          const bestTime = Math.min(...times);
+          document.getElementById("bestTime").textContent =
+            formatTime(bestTime);
+        }
+      }
+
+      // Format time in MM:SS
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+      }
+
+      // Play a level
+      function playLevel(levelNumber) {
+        gameState.currentLevel = levelNumber;
+
+        // Map level numbers to file names
+        const levelFiles = {
+          1: "BBBB.HTML",
+          2: "PUZZLE2.HTML",
+          3: "PUZZLE3.HTML",
+          4: "PUZZLE4.HTML",
+          5: "PUZZLE5.HTML",
+          6: "PUZZLE6.HTML",
+          7: "PUZZLE7.HTML",
+        };
+
+        // Save current state before navigating
+        saveGameState();
+
+        // Navigate to the level
+        window.location.href = levelFiles[levelNumber];
+      }
+
+      // Initialize game
+      loadGameState();
+      updateUI();
+
+      // Listen for messages from puzzle pages
+      window.addEventListener("message", function (event) {
+        if (event.data.type === "levelCompleted") {
+          const level = event.data.level;
+          const time = event.data.time;
+
+          if (!gameState.completedLevels.includes(level)) {
+            gameState.completedLevels.push(level);
+          }
+
+          if (
+            !gameState.bestTimes[level] ||
+            time < gameState.bestTimes[level]
+          ) {
+            gameState.bestTimes[level] = time;
+          }
+
+          saveGameState();
+          updateUI();
+        }
+      });
+    </script>
+  </body>
+</html>
