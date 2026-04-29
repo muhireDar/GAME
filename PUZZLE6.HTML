@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RWANDAN KING Puzzle</title>
+    <title>King's Legacy Puzzle</title>
 
     <style>
       body {
@@ -71,6 +71,10 @@
         border-radius: 25px;
         font-size: 16px;
         transition: transform 0.2s;
+      }
+
+      button:hover {
+        transform: scale(1.05);
       }
 
       .completion-overlay {
@@ -145,7 +149,8 @@
         font-weight: bold;
       }
 
-      .fun-fact, .historical-info {
+      .fun-fact,
+      .historical-info {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 10px;
         padding: 15px;
@@ -154,13 +159,15 @@
         backdrop-filter: blur(10px);
       }
 
-      .fun-fact h3, .historical-info h3 {
+      .fun-fact h3,
+      .historical-info h3 {
         margin-top: 0;
         color: #f5576c;
         font-size: 1.2em;
       }
 
-      .fun-fact p, .historical-info p {
+      .fun-fact p,
+      .historical-info p {
         color: #fff;
         margin-bottom: 0;
         line-height: 1.6;
@@ -169,13 +176,33 @@
   </head>
 
   <body>
-    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 500px; margin: 0 auto 20px;">
-      <button onclick="goBack()" style="padding: 8px 15px; background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid white; border-radius: 20px; cursor: pointer;">← Back to Levels</button>
-      <div style="font-size: 1.2em; font-weight: bold;">Level 1</div>
-      <div id="timer" style="font-size: 1.2em; font-weight: bold;">00:00</div>
+    <div
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 500px;
+        margin: 0 auto 20px;
+      "
+    >
+      <button
+        onclick="goBack()"
+        style="
+          padding: 8px 15px;
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+          border: 1px solid white;
+          border-radius: 20px;
+          cursor: pointer;
+        "
+      >
+        ← Back to Levels
+      </button>
+      <div style="font-size: 1.2em; font-weight: bold">Level 6</div>
+      <div id="timer" style="font-size: 1.2em; font-weight: bold">00:00</div>
     </div>
 
-    <h1>RWANDAN KING</h1>
+    <h1>King's Legacy</h1>
     <hr />
 
     <div id="board"></div>
@@ -189,7 +216,7 @@
         <div class="completion-stats">
           <div class="stat-item">
             <span class="stat-label">Level:</span>
-            <span class="stat-value" id="completion-level">1</span>
+            <span class="stat-value" id="completion-level">6</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Time:</span>
@@ -208,9 +235,12 @@
           <h3>📚 Historical Figure</h3>
           <p id="completion-historical-info">Loading...</p>
         </div>
-        <p style="color: #fff; margin-top: 20px; font-style: italic;">
-          🔗 Continue learning: Search for 'King Kigeli IV Rwabugiri' to discover more about Rwanda's royal history!<br>
-          <strong style="color: #f093fb;">⏭️ Auto-advancing to Level 2 in a few seconds...</strong>
+        <p style="color: #fff; margin-top: 20px; font-style: italic">
+          🔗 Continue learning: Search for 'Dian Fossey' to explore gorilla
+          conservation history in Rwanda!<br />
+          <strong style="color: #f093fb"
+            >⏭️ Auto-advancing to Level 7 in a few seconds...</strong
+          >
         </p>
       </div>
     </div>
@@ -225,11 +255,10 @@
         backdrop-filter: blur(10px);
       "
     >
-      <h2 style="margin-top: 0">Explore Rwandan Culture</h2>
+      <h2 style="margin-top: 0">Rwanda's Royal Heritage</h2>
       <p style="font-size: 16px; line-height: 1.6">
-        Discover the rich history and culture of Rwanda through this puzzle. The
-        image represents the historical relationship between the Hutu and Tutsi
-        peoples.
+        Solve this puzzle to reveal the legacy of Rwanda's kings and their
+        cultural impact.
       </p>
       <div
         style="
@@ -240,7 +269,7 @@
         "
       >
         <a
-          href="https://en.wikipedia.org/wiki/Hutu%E2%80%93Tutsi_conflict"
+          href="https://en.wikipedia.org/wiki/Kingdom_of_Rwanda"
           target="_blank"
           style="
             padding: 10px 15px;
@@ -251,7 +280,7 @@
             border: 1px solid white;
             transition: 0.3s;
           "
-          >Learn More</a
+          >Kingdom of Rwanda</a
         >
         <a
           href="https://en.wikipedia.org/wiki/Rwanda"
@@ -265,7 +294,7 @@
             border: 1px solid white;
             transition: 0.3s;
           "
-          >Rwanda Culture</a
+          >Rwanda</a
         >
       </div>
     </div>
@@ -277,7 +306,6 @@
       let timerInterval = null;
       let gameCompleted = false;
 
-      // Timer functions
       function startTimer() {
         startTime = Date.now();
         timerInterval = setInterval(updateTimer, 1000);
@@ -295,21 +323,18 @@
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
         const minutes = Math.floor(elapsed / 60);
         const seconds = elapsed % 60;
-        document.getElementById('timer').textContent =
-          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        document.getElementById("timer").textContent =
+          `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
       }
 
-      const currentLevel = 1;
-
       function goBack() {
-        window.location.href = 'GAME_INDEX.HTML';
+        window.location.href = "GAME_INDEX.HTML";
       }
 
       function goToNextLevel() {
-        window.location.href = 'PUZZLE2.HTML';
+        window.location.href = "PUZZLE7.HTML";
       }
 
-      // START GAME
       function startGame() {
         tiles = [1, 2, 3, 4, 5, 6, 7, 8, 0];
         shuffle();
@@ -318,7 +343,6 @@
         gameCompleted = false;
       }
 
-      // SHUFFLE TILES
       function shuffle() {
         do {
           for (let i = tiles.length - 1; i > 0; i--) {
@@ -330,7 +354,6 @@
         emptyIndex = tiles.indexOf(0);
       }
 
-      // CHECK SOLVABLE
       function isSolvable() {
         let inversions = 0;
         for (let i = 0; i < 8; i++) {
@@ -343,7 +366,6 @@
         return inversions % 2 === 0;
       }
 
-      // DRAW BOARD
       function draw() {
         const board = document.getElementById("board");
         board.innerHTML = "";
@@ -357,10 +379,8 @@
           } else {
             let x = (value - 1) % 3;
             let y = Math.floor((value - 1) / 3);
-
             tile.style.backgroundPosition = `-${x * 130}px -${y * 130}px`;
             tile.setAttribute("data-number", value);
-
             tile.onclick = () => moveTile(index);
           }
 
@@ -368,7 +388,6 @@
         });
       }
 
-      // MOVE TILE
       function moveTile(index) {
         const possibleMoves = [
           emptyIndex - 1,
@@ -376,7 +395,6 @@
           emptyIndex - 3,
           emptyIndex + 3,
         ];
-
         if (possibleMoves.includes(index)) {
           [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
           emptyIndex = index;
@@ -385,55 +403,54 @@
         }
       }
 
-      // CHECK WIN
       function checkWin() {
         for (let i = 0; i < 8; i++) {
           if (tiles[i] !== i + 1) return;
         }
-
-        if (gameCompleted) return; // Prevent multiple completions
+        if (gameCompleted) return;
         gameCompleted = true;
 
         stopTimer();
         const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
 
-        // Calculate score based on time (max 1000 points, decreases with time)
-        const baseScore = 1000;
-        const timePenalty = Math.floor(elapsedTime / 10) * 50; // Lose 50 points per 10 seconds
-        const score = Math.max(100, baseScore - timePenalty); // Minimum 100 points
-
         setTimeout(() => {
-          const funFact = "Rwanda's Kingdom of Rwanda was one of the oldest and most centralized kingdoms in Africa, dating back to the 15th century!";
-          const historicalInfo = "🌟 Learn about King Kigeli IV Rwabugiri, the powerful king who unified Rwanda in the 19th century and expanded its territory significantly.";
+          // Calculate score based on time (max 1000 points, decreases with time)
+          const baseScore = 1000;
+          const timePenalty = Math.floor(elapsedTime / 10) * 50; // Lose 50 points per 10 seconds
+          const score = Math.max(100, baseScore - timePenalty); // Minimum 100 points
+
+          const funFact =
+            "Gorillas in Rwanda's Volcanoes National Park are habituated to human presence, allowing for close encounters during treks.";
+          const historicalInfo =
+            "🌟 Discover the legacy of Dian Fossey, the American primatologist who dedicated her life to studying and protecting mountain gorillas in Rwanda.";
 
           // Update completion modal
-          document.getElementById('completion-level').textContent = '1';
-          document.getElementById('completion-time').textContent = document.getElementById('timer').textContent;
-          document.getElementById('completion-score').textContent = score;
-          document.getElementById('completion-fun-fact').textContent = funFact;
-          document.getElementById('completion-historical-info').textContent = historicalInfo;
+          document.getElementById("completion-level").textContent = "6";
+          document.getElementById("completion-time").textContent =
+            document.getElementById("timer").textContent;
+          document.getElementById("completion-score").textContent = score;
+          document.getElementById("completion-fun-fact").textContent = funFact;
+          document.getElementById("completion-historical-info").textContent =
+            historicalInfo;
 
           // Show completion overlay
-          document.getElementById('completion-overlay').style.display = 'flex';
+          document.getElementById("completion-overlay").style.display = "flex";
 
-          // Send completion message to parent window (main game page)
           if (window.parent !== window) {
-            window.parent.postMessage({
-              type: 'levelCompleted',
-              level: 1,
-              time: elapsedTime,
-              score: score
-            }, '*');
+            window.parent.postMessage(
+              {
+                type: "levelCompleted",
+                level: 6,
+                time: elapsedTime,
+                score: score,
+              },
+              "*",
+            );
           }
-
-          // Auto-redirect to next level after a delay
-          setTimeout(() => {
-            goToNextLevel();
-          }, 8000);
+          setTimeout(() => goToNextLevel(), 8000);
         }, 200);
       }
 
-      // START FIRST TIME
       startGame();
     </script>
   </body>
